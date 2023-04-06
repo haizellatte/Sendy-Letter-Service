@@ -1,40 +1,49 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import styled from "styled-components";
-import BREAKPOINTMOBILE from "../breakpoint";
+import { BREAKPOINTMOBILE } from "../../src/breakpoint";
 import { Link, useNavigate } from "react-router-dom";
 import postbox from "../asset/postbox.svg";
 import axios from "axios";
-import { getCookie } from "../pages/Certified/Cookie";
+import { getCookie, removeCookie } from "../pages/Certified/Cookie";
+import useStore from "../store/store";
+import Refresh from "../util/Refresh";
 
-function Header({ isLogin }) {
+function Header() {
   const navigate = useNavigate();
-
-  const headers = {
-    "Access-Control-Allow-Origin": "*",
-    "Content-Type": "application/json",
-    "ngrok-skip-browser-warning": "12",
-  };
+  const { isLogin, setIsLogin } = useStore();
 
   //로그아웃 제출 버튼
   const onLogout = async () => {
-    await axios
-      .post(
-        `/api/sendy/auth/logout`,
-        {
-          Authorization: `Bearer ${getCookie("jwtToken")}`,
-          Refresh: localStorage.getItem("refreshToken"),
-        },
-        {
-          headers,
-        }
-      )
-      .then((res) => {
-        console.log(res.body);
+    await axios({
+      method: "post",
+      url: `/api/sendy/auth/logout`,
+      headers: {
+        "ngrok-skip-browser-warning": "12",
+        Authorization: getCookie("accesstoken", {
+          path: "/",
+          secure: true,
+          sameSite: "Strict",
+          HttpOnly: " HttpOnly ",
+        }),
+        Refresh: localStorage.getItem("refreshToken"),
+      },
+    })
+      .then(() => {
+        //리프레시 토큰 삭제
+        localStorage.clear();
+        //액세스 토큰 삭제
+        removeCookie("accesstoken", {
+          path: "/",
+        });
+        // 멤버Id 세션 삭제
+        sessionStorage.clear();
         navigate("/completeLogout");
+        window.location.reload();
       })
       .catch((err) => {
-        console.log(err);
-        alert("로그아웃에 실패하였습니다.");
+        if (err.response.status === 401) {
+          Refresh().then(() => onLogout());
+        }
       });
   };
 
@@ -65,7 +74,7 @@ function Header({ isLogin }) {
                 <Link to="/mypage">mypage</Link>
               </li>
               <li>
-                <a onClick={() => onLogout}>Logout</a>
+                <a onClick={onLogout}>Logout</a>
               </li>
             </div>
           ) : (
@@ -92,7 +101,7 @@ const HeaderComponent = styled.header`
   border-bottom: 1px solid #312f2b;
   display: flex;
   width: 100%;
-  height: 60px;
+  height: clamp(58px, 3vw, 65px);
   position: sticky;
   z-index: 90;
 `;
@@ -106,7 +115,7 @@ const HeaderContainer = styled.div`
   width: 100vw;
 
   @media screen and (max-width: ${BREAKPOINTMOBILE}px) {
-    margin: 0px 30px;
+    margin: 0px 25px;
   }
 
   .logo {
@@ -115,18 +124,17 @@ const HeaderContainer = styled.div`
     align-items: center;
     justify-content: center;
     font-family: "Sriracha";
-    font-size: 2.1rem;
     padding-bottom: 4px;
-
+    font-size: clamp(2.6rem, 3vw, 2.8rem);
     @media screen and (max-width: ${BREAKPOINTMOBILE}px) {
-      font-size: 1.4rem;
+      font-size: 24px;
     }
   }
 
   .logo-img {
     display: inline-block;
-    width: 22px;
-    height: 16px;
+    width: clamp(20px, 2vw, 25px);
+    height: clamp(14px, 2vw, 18px);
     margin-left: 3px;
   }
 
@@ -134,21 +142,27 @@ const HeaderContainer = styled.div`
     display: flex;
     li {
       padding: 0px 20px;
+      @media screen and (max-width: ${BREAKPOINTMOBILE}px) {
+        padding: 0px 7px;
+      }
     }
     .postImg {
-      width: 35px;
+      width: 2.8rem;
       padding-top: 2px;
+      @media screen and (max-width: ${BREAKPOINTMOBILE}px) {
+        padding-top: 12px;
+        width: 1.8rem;
+      }
     }
   }
   a {
     line-height: 36px;
-    font-size: 1.2rem;
     color: #000000;
     font-family: "Inria Sans", sans-serif;
     cursor: pointer;
-
+    font-size: clamp(1.6rem, 3vw, 1.6rem);
     @media screen and (max-width: ${BREAKPOINTMOBILE}px) {
-      font-size: 0.8rem;
+      font-size: 15px;
     }
   }
 `;

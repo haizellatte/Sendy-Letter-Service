@@ -1,6 +1,6 @@
 package com.witchdelivery.messageapp.security.auth.service;
 
-import com.witchdelivery.messageapp.security.auth.utils.CustomAuthorityUtils;
+import com.witchdelivery.messageapp.security.utils.CustomAuthorityUtils;
 import com.witchdelivery.messageapp.global.exception.BusinessLogicException;
 import com.witchdelivery.messageapp.global.exception.ExceptionCode;
 import com.witchdelivery.messageapp.domain.member.entity.Member;
@@ -48,6 +48,8 @@ public class MemberUserDetailsService implements UserDetailsService {
             setEmail(member.getEmail());
             setPassword(member.getPassword());
             setRoles(member.getRoles());
+            setNickname(member.getNickname());
+//            setMemberFile(member.getMemberFile());
         }
 
         @Override

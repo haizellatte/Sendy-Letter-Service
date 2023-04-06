@@ -4,18 +4,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import * as L from "./FormStyled";
 import axios from "axios";
-import { setCookie, getCookie } from "./Cookie";
+import { setCookie } from "./Cookie";
+import { headers, options, GoogleOauthLogin } from "./setupCertified";
 
 function Login() {
   const navigate = useNavigate();
 
-  const headers = {
-    "Access-Control-Allow-Origin": "*",
-    "Content-Type": "application/json",
-    "ngrok-skip-browser-warning": "12",
-  };
-
-  const formShema = yup.object({
+  const FormSchema = yup.object({
     email: yup
       .string()
       .required("이메일을 입력해주세요")
@@ -34,11 +29,10 @@ function Login() {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { isSubmitting, errors },
-  } = useForm({ mode: "onChange", resolver: yupResolver(formShema) });
+  } = useForm({ mode: "onChange", resolver: yupResolver(FormSchema) });
 
-  //로그인 제출 버튼
+  //TODO :로그인 제출 버튼
   const onSubmit = async (data) => {
     const { email, password } = data;
     await axios
@@ -51,27 +45,20 @@ function Login() {
       )
       .then((res) => {
         alert("로그인되었습니다.");
+        //! 멤버Id -> 세션 스토리지에 저장
+        sessionStorage.setItem("memberId", res.data.memberId);
         if (res.headers.getAuthorization) {
-          //! refresh token은 -> local storage에 저장
+          //! refreshToken -> local storage에 저장
           localStorage.setItem("refreshToken", res.headers.get("Refresh"));
-          //! access token은 -> cookie에 저장
-          setCookie(
-            "accesstoken",
-            res.headers.get("Authorization").split(" ")[1],
-            {
-              path: "/",
-              sucure: true,
-              sameSite: "Strict",
-              HttpOnly: " HttpOnly ",
-            }
-          );
-          console.log("accesstoken", getCookie("accesstoken"));
-          console.log("refreshToken", localStorage.getItem("refreshToken"));
+          //! accessToken -> cookie에 저장
+          setCookie("accesstoken", `${res.headers.get("Authorization")}`, {
+            options,
+          });
           navigate("/");
+          window.location.reload();
         }
       })
       .catch((err) => {
-        console.log(err);
         alert("아이디 혹은 비밀번호가 일치하지 않습니다.");
       });
   };
@@ -91,7 +78,9 @@ function Login() {
                 name="email"
                 placeholder="email address"
               />
-              {errors.email && <p>{errors.email.message}</p>}
+              {errors.email && (
+                <div className="err">{errors.email.message}</div>
+              )}
               <input
                 className="pwdInput"
                 {...register("password")}
@@ -100,15 +89,18 @@ function Login() {
                 placeholder="Password"
                 {...register("password")}
               />
-              {errors.password && <p>{errors.password.message}</p>}
+              {errors.password && (
+                <div className="err">{errors.password.message}</div>
+              )}
               <input
                 className="btn"
                 type="submit"
                 value="Log in"
                 disabled={isSubmitting}
               />
+
               <div className="sub-form ">
-                <Link to="/setpwd">
+                <Link to="/setpwd/1">
                   <li>forget Password</li>
                 </Link>
                 <Link to="/signup">
@@ -118,8 +110,11 @@ function Login() {
               <div className="oauth-form">
                 <div className="oauth-head">Log in With</div>
                 <div className="oauth">
-                  <img src={require("../../asset/구글.png")} alt="Googole" />
-                  <img src={require("../../asset/카카오.png")} alt="Kakao" />
+                  <img
+                    src={require("../../asset/구글.png")}
+                    alt="Google"
+                    onClick={GoogleOauthLogin}
+                  />
                 </div>
               </div>
             </div>
@@ -143,8 +138,11 @@ function Login() {
             <div className="oauth-form">
               <div className="oauth-head">Log in With</div>
               <div className="oauth">
-                <img src={require("../../asset/구글.png")} alt="Googole" />
-                <img src={require("../../asset/카카오.png")} alt="Kakao" />
+                <img
+                  src={require("../../asset/구글.png")}
+                  alt="Google"
+                  onClick={GoogleOauthLogin}
+                />
               </div>
             </div>
           </div>
