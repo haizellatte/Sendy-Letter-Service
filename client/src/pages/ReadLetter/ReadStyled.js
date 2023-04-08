@@ -10,21 +10,12 @@ import {
   FONT_STYLE_CONTENT,
   FONT_STYLE_V1,
 } from "../../style/fontStyle";
+import { Text, LetterTheme } from "./Font_Theme";
 import * as W from "../WriteLetter/WriteStyled";
 import pwd from "../../asset/pwd.png";
 import email from "../../asset/mail.png";
 import { PALETTE_V1 } from "../../style/color";
-import 군대 from "../../asset/letterTheme/군대-theme.png";
-import 냥냥편지 from "../../asset/letterTheme/냥냥편지-theme.png";
-import 리본 from "../../asset/letterTheme/리본-theme.png";
-import 수박 from "../../asset/letterTheme/수박-theme.png";
-import 알록달록 from "../../asset/letterTheme/알록달록-theme.png";
-import 체리 from "../../asset/letterTheme/체리-theme.png";
-import 클로버 from "../../asset/letterTheme/클로버-theme.png";
-import 정월대보름 from "../../asset/letterTheme/정월대보름-theme.png";
-import 얼룩 from "../../asset/letterTheme/얼룩-theme.png";
-import 오리 from "../../asset/letterTheme/오리-theme.png";
-import 구름 from "../../asset/letterTheme/구름-theme.png";
+
 
 //todo : 전체 편지지 wrapper
 export const Wrapper = styled.div`
@@ -218,7 +209,7 @@ export const FlexColunmWrapper = styled.div`
 `;
 
 //편지 내용(To, 날짜 , content, from)
-export const Letterpaper = styled(FlexColunmWrapper)`
+export const Letterpaper = styled(FlexColunmWrapper && LetterTheme)`
   aspect-ratio: 680/1133;
   background-size: cover;
   flex-direction: column;
@@ -236,108 +227,6 @@ export const Letterpaper = styled(FlexColunmWrapper)`
   @media screen and (max-width: ${BREAKPOINTMOBILE2}px) {
     min-width: 18rem;
   }
-
-  ${(props) => {
-    switch (props.LetterTheme) {
-      case "군대":
-        return css`
-          background-image: url(${군대});
-        `;
-      case "냥냥편지":
-        return css`
-          background-image: url(${냥냥편지});
-        `;
-      case "리본":
-        return css`
-          background-image: url(${리본});
-        `;
-      case "수박":
-        return css`
-          background-image: url(${수박});
-        `;
-      case "알록달록":
-        return css`
-          background-image: url(${알록달록});
-        `;
-      case "얼룩":
-        return css`
-          background-image: url(${얼룩});
-        `;
-      case "체리":
-        return css`
-          background-image: url(${체리});
-        `;
-      case "클로버":
-        return css`
-          background-image: url(${클로버});
-        `;
-      case "정월대보름":
-        return css`
-          background-image: url(${정월대보름});
-        `;
-      case "오리":
-        return css`
-          background-image: url(${오리});
-        `;
-      case "구름":
-        return css`
-          background-image: url(${구름});
-        `;
-      default:
-        break;
-    }
-  }};
-
-  ${(props) => {
-    switch (props.LetterBackround) {
-      case "군대":
-        return css`
-          background: #dfeace;
-        `;
-      case "냥냥편지":
-        return css`
-          background: #f3e016;
-        `;
-      case "리본":
-        return css`
-          background: #fdf6b2;
-        `;
-      case "수박":
-        return css`
-          background: #f5c5b9;
-        `;
-      case "알록달록":
-        return css`
-          background: #a9e0ff;
-        `;
-      case "얼룩":
-        return css`
-          background: #c4c6c8;
-        `;
-      case "체리":
-        return css`
-          background: #d3e3e2;
-        `;
-      case "클로버":
-        return css`
-          background: #d0ffe6;
-        `;
-      case "정월대보름":
-        return css`
-          background: #71b2c5;
-        `;
-      case "오리":
-        return css`
-          background: #daffff;
-        `;
-      case "구름":
-        return css`
-          background: #a9e0ff;
-        `;
-      default:
-        break;
-    }
-  }};
 
   .letterContent {
     display: flex;
@@ -358,45 +247,6 @@ export const Letterpaper = styled(FlexColunmWrapper)`
       justify-content: space-around;
     }
   }
-`;
-
-export const Text = styled.div`
-  ${(props) => {
-    switch (props.font) {
-      case "프리텐다드":
-        return FONT_STYLE_V1.body.body_20_light;
-      case "도스샘물":
-        return FONT_STYLE_CONTENT.pixel_20;
-      case "강원교육모두체":
-        return FONT_STYLE_CONTENT.gangwonedu_22_bold;
-      case "에스코어 드림":
-        return FONT_STYLE_CONTENT.scoredream_20;
-      case "태백 은하수체":
-        return FONT_STYLE_CONTENT.taebaek_20;
-      case "다채사랑":
-        return FONT_STYLE_CONTENT.dachelove_22;
-      case "백의의 천사":
-        return FONT_STYLE_CONTENT.whiteangle_22;
-      case "고딕 아니고 고딩":
-        return FONT_STYLE_CONTENT.gothicgoding_22;
-      case "혁이체":
-        return FONT_STYLE_CONTENT.hyukee_22;
-      case "이서윤체":
-        return FONT_STYLE_CONTENT.leeseoyun_20;
-      case "신비는 일곱살":
-        return FONT_STYLE_CONTENT.sangsang_26;
-      case "카페24 고운밤":
-        return FONT_STYLE_CONTENT.cafe24oneprettynight_22;
-      case "제주명조":
-        return FONT_STYLE_CONTENT.jejumyeongjo_20;
-      case "리디바탕":
-        return FONT_STYLE_CONTENT.ridibatang_20;
-      case "나눔스퀘어 네오":
-        return FONT_STYLE_CONTENT.nanumneo_20;
-      default:
-        break;
-    }
-  }}
 `;
 
 export const To = styled(Text)``;

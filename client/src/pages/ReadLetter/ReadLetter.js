@@ -4,7 +4,7 @@ import * as R from "./ReadStyled";
 import domtoimage from "dom-to-image";
 import { saveAs } from "file-saver";
 import SecretLetter from "./SecretLetter";
-import { AiOutlineSound } from "react-icons/ai";
+import { AiOutlineSound } from "react-icons/ai" ;
 import { HiPause } from "react-icons/hi2";
 import { getSpeech, pauseSpeech } from "./GetSpeech";
 import ReadButtons from "./ReadButtons";
@@ -14,6 +14,7 @@ import { Loading } from "../../components/Loading";
 import axios from "axios";
 import Refresh from "../../util/Refresh";
 import ShareButtons from "./ShareButtons";
+import { Text } from "./Font_Theme";
 
 const ReadLetter = () => {
   const { urlName } = useParams();
@@ -200,8 +201,8 @@ const ReadLetter = () => {
                 )}
                 <div className="preview-back-content">
                   <R.FlexWrapper1>
-                    <R.Text font={data.fontName}>{data.toName}에게</R.Text>
-                    <R.Text font={data.fontName}>{data.fromName}(이)가</R.Text>
+                    <Text font={data.fontName}>{data.toName}에게</Text>
+                    <Text font={data.fontName}>{data.fromName}(이)가</Text>
                   </R.FlexWrapper1>
                 </div>
               </R.Letterpaper>

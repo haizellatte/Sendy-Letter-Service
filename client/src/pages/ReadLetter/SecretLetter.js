@@ -39,7 +39,7 @@ const ReadLetter = ({ setEnterPassword }) => {
         <S.Secretform onSubmit={handleSubmit(onSubmit)}>
           <div className="head">편지 비밀번호를 입력해주세요.</div>
           <input
-            className="pwdInput"
+            src={require("../../asset/pwd.png")}
             name="numberpassword"
             type="password"
             placeholder="Password"

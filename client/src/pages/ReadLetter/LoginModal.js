@@ -89,7 +89,7 @@ const { setIsLogin } = useStore();
         </div>
         <form onSubmit={handleSubmit(onSubmit)}>
           <input
-            className="emailInput"
+            src={require("../../asset/mail.png")}
             type="email"
             name="email"
             placeholder="email address"
@@ -98,6 +98,7 @@ const { setIsLogin } = useStore();
           {errors.email && <p>{errors.email.message}</p>}
           <input
             className="pwdInput"
+            src={require("../../asset/pwd.png")}
             type="password"
             name="password"
             placeholder="Password"

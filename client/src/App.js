@@ -16,14 +16,10 @@ import CompleteSignup from "./pages/Certified/CompleteSignup";
 import Preview from "./pages/WriteLetter/Preview";
 import NotFound from "./pages/NotFound";
 import Complete from "./pages/WriteLetter/Complete";
-import { getCookie } from "./pages/Certified/Cookie";
-
 // ! 공백
 function App() {
   const displayFooter = true;
-
-    console.log(getCookie("accessToken"))
-  
+  // ! 공백
   return (
     <BrowserRouter>
       <Header />

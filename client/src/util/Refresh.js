@@ -12,11 +12,10 @@ function Refresh() {
     url: `/api/sendy/auth/reissue`,
     headers: {
       "ngrok-skip-browser-warning": "12",
-      Refresh: localStorage.getItem("refreshToken"),
+      Refresh: sessionStorage.getItem("refreshToken"),
     },
   })
     .then((res) => {
-      if (res.headers.getAuthorization) {
         //액세스토큰 재발급
         setCookie(
           "accessToken",
@@ -28,7 +27,6 @@ function Refresh() {
             HttpOnly: " HttpOnly ",
           }
         );
-      }
     })
     .catch((err) => {
       console.log(err);

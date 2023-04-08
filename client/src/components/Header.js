@@ -23,20 +23,19 @@ function Header() {
       },
     })
       .then(() => {
-        //리프레시 토큰 삭제
-        localStorage.clear();
-        //액세스 토큰 삭제
+        //sessionStorage : 리프레시토큰, 멤버Id 삭제
+        sessionStorage.clear();
+        //쿠키 : 액세스 토큰 삭제
         removeCookie("accessToken", {
           path: "/",
         });
-        // 멤버Id 세션 삭제
-        sessionStorage.clear();
         navigate("/completeLogout");
         window.location.reload();
       })
       .catch((err) => {
         if (err.response.status === 401) {
-          Refresh().then(() => window.location.reload().then(() => onLogout()));
+          // Refresh().then(() => window.location.reload().then(() => onLogout()));
+          Refresh().then(() => onLogout());
         }
       });
   };
