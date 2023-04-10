@@ -38,11 +38,7 @@ const ReadLetter = ({ setEnterPassword }) => {
       <S.SWrapper theme="scret">
         <S.Secretform onSubmit={handleSubmit(onSubmit)}>
           <div className="head">편지 비밀번호를 입력해주세요.</div>
-          <input
-            src={require("../../asset/pwd.png")}
-            name="numberpassword"
-            type="password"
-            placeholder="Password"
+          <S.PwdInput
             {...register("numberpassword")}
           />
           {errors.numberpassword && <p>{errors.numberpassword.message}</p>}

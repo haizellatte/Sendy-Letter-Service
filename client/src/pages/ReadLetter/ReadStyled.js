@@ -7,15 +7,12 @@ import {
 import {
   FONT_STYLE_READ,
   FONT_STYLE_LOGIN,
-  FONT_STYLE_CONTENT,
-  FONT_STYLE_V1,
 } from "../../style/fontStyle";
-import { Text, LetterTheme } from "./Font_Theme";
 import * as W from "../WriteLetter/WriteStyled";
+import { LetterTheme, Text, Contentfonts } from "./Font_Theme";
 import pwd from "../../asset/pwd.png";
 import email from "../../asset/mail.png";
 import { PALETTE_V1 } from "../../style/color";
-
 
 //todo : 전체 편지지 wrapper
 export const Wrapper = styled.div`
@@ -115,28 +112,6 @@ export const Secretform = styled.form`
     display: flex;
     ${FONT_STYLE_READ.title_19_medium}
   }
-  .pwdInput {
-    display: flex;
-    width: 27rem;
-    height: 3rem;
-    background-size: 1.5rem;
-    padding: 1rem 4rem;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    border-bottom: 1.4px solid #000;
-    background-image: url("${pwd}");
-    background-color: initial;
-    background-repeat: no-repeat;
-    background-position: left;
-    background-size: 21px;
-    letter-spacing: 3px;
-
-    @media screen and (max-width: ${BREAKPOINTMOBILE}px) {
-      width: 24rem;
-      font-size: 1.5rem;
-    }
-  }
   .btn {
     display: flex;
     justify-content: center;
@@ -165,6 +140,32 @@ export const Secretform = styled.form`
     }
   }
 `;
+
+export const PwdInput = styled.input.attrs({
+  name : "numberpassword",
+  type : "password",
+  placeholder : "Password"
+})`
+    background-image: url("${pwd}");
+    display: flex;
+    width: 27rem;
+    height: 3rem;
+    background-size: 1.5rem;
+    padding: 1rem 4rem;
+    border: none;
+    border-bottom: 1.4px solid #000;
+    background-color: initial;
+    background-repeat: no-repeat;
+    background-position: left;
+    background-size: 21px;
+    letter-spacing: 3px;
+
+    @media screen and (max-width: ${BREAKPOINTMOBILE}px) {
+      width: 24rem;
+      font-size: 1.5rem;
+    }
+`;
+
 
 //todo : 편지 조회 페이지에서 맨위 비밀번호 input
 export const EnterSeret = styled.div`
@@ -209,7 +210,8 @@ export const FlexColunmWrapper = styled.div`
 `;
 
 //편지 내용(To, 날짜 , content, from)
-export const Letterpaper = styled(FlexColunmWrapper && LetterTheme)`
+export const Letterpaper = styled(LetterTheme)`
+  display: flex;
   aspect-ratio: 680/1133;
   background-size: cover;
   flex-direction: column;
@@ -220,6 +222,56 @@ export const Letterpaper = styled(FlexColunmWrapper && LetterTheme)`
   max-width: 680px;
   background-color: #ffffff;
   justify-content: space-between;
+  ${(props) => {
+    switch (props.LetterBackround) {
+      case "군대":
+        return css`
+          background: #dfeace;
+        `;
+      case "냥냥편지":
+        return css`
+          background: #f3e016;
+        `;
+      case "리본":
+        return css`
+          background: #fdf6b2;
+        `;
+      case "수박":
+        return css`
+          background: #f5c5b9;
+        `;
+      case "알록달록":
+        return css`
+          background: #a9e0ff;
+        `;
+      case "얼룩":
+        return css`
+          background: #c4c6c8;
+        `;
+      case "체리":
+        return css`
+          background: #d3e3e2;
+        `;
+      case "클로버":
+        return css`
+          background: #d0ffe6;
+        `;
+      case "정월대보름":
+        return css`
+          background: #71b2c5;
+        `;
+      case "오리":
+        return css`
+          background: #daffff;
+        `;
+      case "구름":
+        return css`
+          background: #a9e0ff;
+        `;
+      default:
+        break;
+    }
+  }};
 
   @media screen and (max-width: ${BREAKPOINTMOBILE}px) {
     min-width: 18rem;
@@ -256,7 +308,7 @@ export const From = styled(Text)`
   justify-content: flex-end;
 `;
 
-export const Content = styled.div`
+export const Content = styled(Contentfonts)`
   aspect-ratio: 1/1.5;
   padding: 0 1rem 0 0;
   background-color: transparent;
@@ -265,43 +317,6 @@ export const Content = styled.div`
   letter-spacing: 2px;
   white-space: pre-wrap;
   overflow-y: auto;
-  ${(props) => {
-    switch (props.font) {
-      case "프리텐다드":
-        return FONT_STYLE_V1.body.body_18_light;
-      case "도스샘물":
-        return FONT_STYLE_CONTENT.pixel_18;
-      case "강원교육모두체":
-        return FONT_STYLE_CONTENT.gangwonedu_20_bold;
-      case "에스코어 드림":
-        return FONT_STYLE_CONTENT.scoredream_18;
-      case "태백 은하수체":
-        return FONT_STYLE_CONTENT.taebaek_18;
-      case "다채사랑":
-        return FONT_STYLE_CONTENT.dachelove_20;
-      case "백의의 천사":
-        return FONT_STYLE_CONTENT.whiteangle_20;
-      case "고딕 아니고 고딩":
-        return FONT_STYLE_CONTENT.gothicgoding_20;
-      case "혁이체":
-        return FONT_STYLE_CONTENT.hyukee_20;
-      case "이서윤체":
-        return FONT_STYLE_CONTENT.leeseoyun_18;
-      case "신비는 일곱살":
-        return FONT_STYLE_CONTENT.sangsang_24;
-      case "카페24 고운밤":
-        return FONT_STYLE_CONTENT.cafe24oneprettynight_20;
-      case "제주명조":
-        return FONT_STYLE_CONTENT.jejumyeongjo_18;
-      case "리디바탕":
-        return FONT_STYLE_CONTENT.ridibatang_18;
-      case "나눔스퀘어 네오":
-        return FONT_STYLE_CONTENT.nanumneo_18;
-      default:
-        break;
-    }
-  }}
-  overflow: auto;
   &:focus {
     outline: none;
   }
@@ -601,7 +616,7 @@ export const Triangle = styled.div`
   border-left: 0.2rem solid;
   border-bottom: 0.2rem solid;
   z-index: 100;
-  &::after {
+  &::after(Bordercolors) {
     content: "";
     top: 3px;
     right: 3px;
@@ -612,7 +627,7 @@ export const Triangle = styled.div`
     background: transparent;
     /* 꼬다리 색깔 */
     border: 4.35rem solid;
-    ${(props) => {
+    /* ${(props) => {
       switch (props.bordercolor) {
         case "군대":
           return css`
@@ -683,7 +698,7 @@ export const Triangle = styled.div`
         default:
           break;
       }
-    }};
+    }}; */
   }
   &::before {
     content: "";

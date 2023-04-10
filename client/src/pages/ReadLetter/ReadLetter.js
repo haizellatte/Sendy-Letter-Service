@@ -111,8 +111,6 @@ const ReadLetter = () => {
       });
   };
 
-  console.log(letterPassword)
-
   const weekday = ["일", "월", "화", "수", "목", "금", "토"];
   const LetterDate = `${new Date(`${data.createdAt}`).getFullYear()}.${(
     "00" +
@@ -199,7 +197,7 @@ const ReadLetter = () => {
                     border="none"
                   ></R.BackImg>
                 )}
-                <div className="preview-back-content">
+                <div className="back-content">
                   <R.FlexWrapper1>
                     <Text font={data.fontName}>{data.toName}에게</Text>
                     <Text font={data.fontName}>{data.fromName}(이)가</Text>
