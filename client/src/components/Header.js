@@ -34,7 +34,6 @@ function Header() {
       })
       .catch((err) => {
         if (err.response.status === 401) {
-          // Refresh().then(() => window.location.reload().then(() => onLogout()));
           Refresh().then(() => onLogout());
         }
       });

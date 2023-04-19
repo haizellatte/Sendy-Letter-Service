@@ -28,7 +28,7 @@ const useStore = create(
       acessTokenExpire: false,
       setAcessTokenExpire: (token) =>
         set((state) => ({ acessTokenExpire: token })),
-      letterPassword: "",
+      letterPassword: 0,
       setLetterPassword: (password) =>
         set((state) => ({ letterPassword: password })),
       messageId: "",

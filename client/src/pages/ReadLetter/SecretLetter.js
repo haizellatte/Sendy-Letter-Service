@@ -25,13 +25,15 @@ const ReadLetter = ({ setEnterPassword }) => {
 
   const onSubmit = async (data) => {
     const { numberpassword } = data;
-    if (String(letterPassword) === String(numberpassword)) {
+    if (Number(letterPassword) === Number(numberpassword)) {
       alert("비밀번호가 일치합니다! 어떤 편지가 왔을까요?");
       setEnterPassword(true);
     } else {
       alert("비밀번호가 일치하지 않습니다. 편지를 열 수 없어요.");
     }
   };
+
+  console.log(letterPassword);
 
   return (
     <>
