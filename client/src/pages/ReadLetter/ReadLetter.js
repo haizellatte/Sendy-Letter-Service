@@ -6,7 +6,7 @@ import { saveAs } from "file-saver";
 import SecretLetter from "./SecretLetter";
 import { AiOutlineSound } from "react-icons/ai" ;
 import { HiPause } from "react-icons/hi2";
-import { getSpeech, pauseSpeech } from "./GetSpeech";
+import { getSpeech, pauseSpeech } from "./TTS";
 import ReadButtons from "./ReadButtons";
 import { getCookie } from "../Certified/Cookie";
 import useStore from "../../store/store";
@@ -38,18 +38,13 @@ const ReadLetter = () => {
   //이미지로 저장하기 버튼
   const onDownloadBtn = () => {
     setIsLoading(true);
-    domtoimage.toBlob(LetterFrontRef.current).then((Blob) => {
-      setIsLoading(false);
-      alert("편지가 저장되었어요!");
-      saveAs(Blob, "letter.png");
-    });
-    // domtoimage
-    //   .toBlob(rotate ? LetterBackRef.current : LetterFrontRef.current)
-    //   .then((Blob) => {
-    //     setIsLoading(false);
-    //     alert("편지가 저장되었어요!");
-    //     saveAs(Blob, "letter.png");
-    //   });
+    domtoimage
+      .toBlob( !rotate ? LetterFrontRef.current : LetterBackRef.current)
+      .then((Blob) => {
+        setIsLoading(false);
+        alert("편지가 저장되었어요!");
+        saveAs(Blob, "letter.png");
+      });
   };
 
   //todo 모달 영역 밖 클릭 시 모달 닫기
