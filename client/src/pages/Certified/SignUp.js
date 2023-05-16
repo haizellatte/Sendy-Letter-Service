@@ -81,7 +81,7 @@ function SignUp() {
           navigate("/completesignup");
         })
         .catch(() => {
-          // alert("이미 가입된 유저입니다.");
+          alert("이미 가입된 유저입니다.");
         });
     }
   };
@@ -170,13 +170,13 @@ function SignUp() {
           alert("인증코드가 발송되었습니다. 이메일을 확인해주세요 !");
         }, 300);
         setCode(res.data.code);
-        console.log(res.data.code);
       })
       .catch(() => {
         setIsLoading(false);
       });
-  };
-
+    };
+    // console.log(isCode);
+    
   return (
     <>
       {isLoading ? <Loading /> : ""}
